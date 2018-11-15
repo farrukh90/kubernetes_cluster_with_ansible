@@ -41,17 +41,15 @@
      local_action: wait_for host={{ ansible_ssh_host | default(inventory_hostname) }} state=started port=22 delay=30 timeout=300 connect_timeout=15
      when: rebooting|changed
 
-   - name: Add Docker repository
-     get_url:
-       url: https://download.docker.com/linux/centos/docker-ce.repo
-       dest: /etc/yum.repos.d/docker-ce.repo
-       mode: 0644
+   - name: Repository for docker 
+     copy:
+       src: ./docker.repo
+       dest: /etc/yum.repos.d
 
-   - name: Install Docker-CE
-     yum:
-       name: docker-ce
-       state: present
-       update_cache: true
+   - name: Install docker 
+     package: 
+       name: docker
+       
 
    - name: Creating Kubernetes repository
      yum_repository:

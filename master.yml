@@ -14,7 +14,7 @@
         - bind-utils
 
     - name: Initialize Kubernetes cluster
-      shell: "kubeadm init --pod-network-cidr=10.244.0.0/16 &>> cluster_initialized.log"
+      shell: "kubeadm init --pod-network-cidr=10.244.0.0/16 &>> cluster_initialized.log --ignore-preflight-errors=true"
       args:
         chdir: $HOME
         creates: cluster_initialized.log
